@@ -1,0 +1,36 @@
+application:
+  description: Order Service API
+  version: 1.0
+
+server:
+#  port: 8085
+  servlet:
+    context-path: /
+
+spring.application.name: orders
+spring.kafka:
+  bootstrap-servers: 127.0.0.1:9092
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.LongSerializer
+    value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  streams:
+    properties:
+      default.key.serde: org.apache.kafka.common.serialization.Serdes$LongSerde
+      default.value.serde: org.springframework.kafka.support.serializer.JsonSerde
+      spring.json.trusted.packages: "*"
+    state-dir: D:/github/sample-microservice-kafka/spring-boot-kafka-stream/tmp/kafka-streams/
+
+spring.output.ansi.enabled: ALWAYS
+#spring.cloud.stream.kafka.binder.replicationFactor: 1
+
+logging.pattern.console: "%clr(%d{HH:mm:ss.SSS}){blue} %clr(---){faint} %clr([%15.15t]){yellow} %clr(:){red} %clr(%m){faint}%n"
+
+kafka.topic.num-partitions: 2
+kafka.topic.replication-factor: 1
+
+sys-version: 1.0.0
+sys-tenant-id: ordering-${sys-version}
+topic:
+  order: ${sys-tenant-id}-order
+  payment: ${sys-tenant-id}-payment
+  stock: ${sys-tenant-id}-stock
